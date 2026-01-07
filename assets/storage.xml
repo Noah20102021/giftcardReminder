@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="Big5" ?>
+<cards>
+    <card>
+        <siteName>Example</siteName>
+        <siteURL>example.com</siteURL>
+        <value>20?</value>
+        <expires>No expiry</expires>
+    </card>
+</cards>

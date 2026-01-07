@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Card Reminder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Gift Card Reminder</h1>
+            <div class="logo">
+                <img src="gcr_LOGO.png" alt="Gift Card Reminder Logo" width="40" height="40">
+            </div>
+        </header>
+
+        <div class="divider"></div>
+
+        <main class="main-content">
+            <button id="add" class="add-button">
+                <i class="fas fa-plus"></i>
+                <span>Add Gift Card</span>
+            </button>
+
+            <div class="card-list">
+
+
+                <article class="card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title">Example gift card</h3>
+                            <span class="card-value">20€</span>
+                        </div>
+                        <div class="card-details">
+                            <p class="card-domain">
+                                <i class="fas fa-globe"></i>
+                                example.com
+                            </p>
+                            <p class="card-expiry">
+                                <i class="far fa-calendar-alt"></i>
+                                Expires: never
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="icon-button" aria-label="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="icon-button" aria-label="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </main>
+    </div>
+    <script src="assets/script.js"></script>
+</body>
+</html>

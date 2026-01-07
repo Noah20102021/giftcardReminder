@@ -1,0 +1,10 @@
+{
+  "name": "Gift-card reminder",
+  "description": "An extension, that reminds you of your gift-cards.",
+  "version": "0.1",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "gcr_LOGO_ico.png"
+  }
+}
