@@ -3,7 +3,15 @@
     <card>
         <siteName>Example</siteName>
         <siteURL>example.com</siteURL>
-        <value>20?</value>
+        <value>20</value>
+        <currency>eur</currency>
+        <expires>No expiry</expires>
+    </card>
+    <card>
+        <siteName>Example2</siteName>
+        <siteURL>example2.com</siteURL>
+        <value>200</value>
+        <currency>usd</currency>
         <expires>No expiry</expires>
     </card>
 </cards>
