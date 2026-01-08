@@ -90,13 +90,18 @@ const currencyMap = {
 };
 
 if (window.location.href.endsWith('index.html')) {
-    scanCards()
+    scanCards().then(cards => {
+        loadIndexScreen(cards);
+    });
 
     document.getElementById("add").addEventListener("click", () => {
         window.location.href = 'add.html';
     });
 }else if(window.location.href.endsWith('add.html')){
     addCurrencyToForm()
+    document.getElementById("addForm").addEventListener("submit", () => {
+        addCard(new FormData(document.getElementById("addForm")));
+    });
     document.getElementById("addFormExpires").disabled = true;
     document.getElementById("addFormExpires").style.display = "none";
     document.getElementById("expiresOnOff").addEventListener("change", () => {
@@ -115,59 +120,121 @@ function addCurrencyToForm() {
 }
 
 function scanCards() {
+    return new Promise(resolve => {
+        chrome.storage.local.get(["cards"], data => {
+            resolve(data.cards || []);
+        });
+    });
+}
 
-    const cardList = document.getElementById("card-list");
 
-    fetch("assets/storage.xml")
-        .then(response => response.text())
-        .then(xmlText => {
+function loadIndexScreen(cards){
 
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+    Array.from(cards).forEach(card => {
+        const cardList = document.getElementById("card-list");
+        const siteName = card.siteName || "";
+        const siteURL  = card.siteURL  || "";
+        const value    = card.value   || "";
+        const expires  = card.expires  || "";
+        const id       = card.id       || "";
+        var currency = card.currency  || "";
+        currency = currencyMap[currency];
 
-            const cardNodes = xmlDoc.getElementsByTagName("card");
+        cardList.innerHTML += "<article class=\"card\">\n" +
+            "                    <div class=\"card-content\">\n" +
+            "                        <div class=\"card-header\">\n" +
+            "                            <h3 class=\"card-title\">"+siteName+" gift card</h3>\n" +
+            "                            <span class=\"card-value\">"+value+currency+"</span>\n" +
+            "                        </div>\n" +
+            "                        <div class=\"card-details\">\n" +
+            "                            <p class=\"card-domain\">\n" +
+            "                                <i class=\"fas fa-globe\"></i>\n" +
+            "                                "+siteURL+"\n" +
+            "                            </p>\n" +
+            "                            <p class=\"card-expiry\">\n" +
+            "                                <i class=\"far fa-calendar-alt\"></i>\n" +
+            "                                Expires: "+expires+"\n" +
+            "                            </p>\n" +
+            "                        </div>\n" +
+            "                    </div>\n" +
+            "                    <div class=\"card-actions\">\n" +
+            "                        <button id=\""+id+"\" class=\"icon-button\" aria-label=\"Delete\">\n" +
+            "                            <i class=\"fas fa-trash\"></i>\n" +
+            "                        </button>\n" +
+            "                    </div>\n" +
+            "                </article>"
 
-            Array.from(cardNodes).forEach(card => {
+        document.getElementById(id).addEventListener("click", () => {
+            removeCard(id);
+        });
+    });
+}
 
-                const siteName = card.getElementsByTagName("siteName")[0]?.textContent || "";
-                const siteURL  = card.getElementsByTagName("siteURL")[0]?.textContent  || "";
-                const value    = card.getElementsByTagName("value")[0]?.textContent    || "";
-                const expires  = card.getElementsByTagName("expires")[0]?.textContent  || "";
-                var currency = card.getElementsByTagName("currency")[0]?.textContent  || "";
-                currency = currencyMap[currency];
+function extractSiteName(input) {
 
-                cardList.innerHTML += "<article class=\"card\">\n" +
-                    "                    <div class=\"card-content\">\n" +
-                    "                        <div class=\"card-header\">\n" +
-                    "                            <h3 class=\"card-title\">"+siteName+" gift card</h3>\n" +
-                    "                            <span class=\"card-value\">"+value+currency+"</span>\n" +
-                    "                        </div>\n" +
-                    "                        <div class=\"card-details\">\n" +
-                    "                            <p class=\"card-domain\">\n" +
-                    "                                <i class=\"fas fa-globe\"></i>\n" +
-                    "                                "+siteURL+"\n" +
-                    "                            </p>\n" +
-                    "                            <p class=\"card-expiry\">\n" +
-                    "                                <i class=\"far fa-calendar-alt\"></i>\n" +
-                    "                                Expires: "+expires+"\n" +
-                    "                            </p>\n" +
-                    "                        </div>\n" +
-                    "                    </div>\n" +
-                    "                    <div class=\"card-actions\">\n" +
-                    "                        <button class=\"icon-button\" aria-label=\"Edit\">\n" +
-                    "                            <i class=\"fas fa-edit\"></i>\n" +
-                    "                        </button>\n" +
-                    "                        <button class=\"icon-button\" aria-label=\"Delete\">\n" +
-                    "                            <i class=\"fas fa-trash\"></i>\n" +
-                    "                        </button>\n" +
-                    "                    </div>\n" +
-                    "                </article>"
+    const host = input
+        .replace(/^https?:\/\//, "")
+        .split("/")[0];
 
-            });
 
-        })
-        .catch(error => {
-            console.error("Fehler beim Laden der XML:", error);
+    const parts = host.split(".");
+
+
+    if (parts[0].toLowerCase() === "www") {
+        parts.shift();
+    }
+
+
+    while (parts.length > 1) {
+        parts.pop();
+    }
+
+
+    let name = parts[0] || "";
+
+
+    name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
+    return name;
+}
+
+function addCard(formData) {
+    const domain = formData.get("Domain");
+    const value = formData.get("Value");
+    var expires;
+    const currency = formData.get("currency");
+
+    if (formData.get("expiresOnOff")) {
+        expires = formData.get("Expires");
+    }else {
+        expires = "No expiry";
+    }
+
+    const siteName = extractSiteName(domain);
+
+    chrome.storage.local.get(["cards"], data => {
+        const cards = data.cards || [];
+
+        cards.push({
+            id: Date.now(),
+            siteName: siteName,
+            siteURL: domain,
+            value: value,
+            currency: currency,
+            expires: expires
         });
 
+        chrome.storage.local.set({ cards: cards });
+    });
+
+
+}
+
+function removeCard(id) {
+    chrome.storage.local.get(["cards"], data => {
+        chrome.storage.local.set({
+            cards: (data.cards || []).filter(card => card.id !== id)
+        });
+        location.reload();
+    });
 }
