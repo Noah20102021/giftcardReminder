@@ -1,0 +1,95 @@
+/* Bookmark Button */
+.giftcard-bookmark {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-image: url('../gcr_LOGO_ico.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    z-index: 10000;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.giftcard-bookmark:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Banner */
+.giftcard-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #3B7080;
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 9999;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.giftcard-banner.visible {
+    transform: translateY(0);
+}
+
+.giftcard-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.giftcard-banner-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.giftcard-banner-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.giftcard-banner-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url('../gcr_LOGO_ico.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+/* Animation */
+@keyframes slideIn {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+@keyframes slideOut {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100%); }
+}

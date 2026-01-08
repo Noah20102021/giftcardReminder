@@ -1,11 +1,29 @@
 {
   "name": "Gift-card reminder",
-  "description": "An extension, that reminds you of your gift-cards.",
-  "version": "0.1",
+  "description": "An extension that reminds you of your gift-cards.",
+  "version": "1.0",
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html",
     "default_icon": "gcr_LOGO_ico.png"
   },
-  "permissions": ["storage"]
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "js": ["scripts/watcher.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/insert_style.css",
+        "gcr_LOGO_ico.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
