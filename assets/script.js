@@ -129,6 +129,13 @@ function scanCards() {
 
 
 function loadIndexScreen(cards){
+    cards.sort((a, b) => {
+        const nameA = a.siteName.toLowerCase();
+        const nameB = b.siteName.toLowerCase();
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        return 0;
+    });
 
     Array.from(cards).forEach(card => {
         const cardList = document.getElementById("card-list");

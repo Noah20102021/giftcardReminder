@@ -11,8 +11,12 @@ banner.className = 'giftcard-banner';
 
 banner.innerHTML = `
     <div class="giftcard-banner-content">
+    
         <div class="giftcard-banner-icon"></div>
-        <div id="giftcard-banner-text"></div>
+        
+        <div id="giftcard-banner-text"> 
+       
+        </div>
     </div>
     <button class="giftcard-banner-close" title="Minimize">
         &times;
@@ -93,7 +97,7 @@ chrome.storage.local.get(["cards"], data => {
 
         valueText = valueText.slice(0, -3);
 
-        document.getElementById('giftcard-banner-text').textContent = valueText;
+        document.getElementById('giftcard-banner-text').textContent += valueText;
 
         bookmarkBtn.style.display = 'block';
         banner.style.display = 'flex';
