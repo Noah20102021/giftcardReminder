@@ -89,7 +89,30 @@ const currencyMap = {
     xpf: "₣"
 };
 
-scanCards()
+if (window.location.href.endsWith('index.html')) {
+    scanCards()
+
+    document.getElementById("add").addEventListener("click", () => {
+        window.location.href = 'add.html';
+    });
+}else if(window.location.href.endsWith('add.html')){
+    addCurrencyToForm()
+    document.getElementById("addFormExpires").disabled = true;
+    document.getElementById("addFormExpires").style.display = "none";
+    document.getElementById("expiresOnOff").addEventListener("change", () => {
+        document.getElementById("addFormExpires").disabled = !document.getElementById("expiresOnOff").checked;
+        document.getElementById("addFormExpires").style.display = document.getElementById("expiresOnOff").checked ? "block" : "none";
+    })
+}
+
+function addCurrencyToForm() {
+    const currencySelect = document.getElementById("currencySelect");
+
+    for (var i in currencyMap){
+        currencySelect.innerHTML += "<option value='"+i+"'>"+i.toUpperCase()+"("+currencyMap[i]+")"+"</option>";
+    }
+
+}
 
 function scanCards() {
 
