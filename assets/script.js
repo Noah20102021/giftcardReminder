@@ -137,6 +137,8 @@ function loadIndexScreen(cards){
         return 0;
     });
 
+    let buttons = [];
+
     Array.from(cards).forEach(card => {
         const cardList = document.getElementById("card-list");
         const siteName = card.siteName || "";
@@ -171,10 +173,16 @@ function loadIndexScreen(cards){
             "                    </div>\n" +
             "                </article>"
 
-        document.getElementById(id).addEventListener("click", () => {
-            removeCard(id);
+        buttons.push(id);
+
+    });
+
+    Array.from(buttons).forEach(button =>{
+        document.getElementById(button).addEventListener("click", () => {
+            removeCard(button);
         });
     });
+
 }
 
 function extractSiteName(input) {
