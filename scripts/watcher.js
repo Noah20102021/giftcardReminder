@@ -14,7 +14,7 @@ banner.innerHTML = `
     
         <div class="giftcard-banner-icon"></div>
         
-        <div id="giftcard-banner-text"> 
+        <div id="giftcard-banner-text" title="We only compare the domain name (second-level domain), so some of your gift cards might not be valid for this specific site."> 
        
         </div>
     </div>
@@ -97,7 +97,7 @@ chrome.storage.local.get(["cards"], data => {
 
         valueText = valueText.slice(0, -3);
 
-        document.getElementById('giftcard-banner-text').textContent += valueText;
+        document.getElementById('giftcard-banner-text').textContent += valueText + " ⓘ";
 
         bookmarkBtn.style.display = 'block';
         banner.style.display = 'flex';
