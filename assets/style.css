@@ -184,8 +184,17 @@ body {
 .card-title {
   font-size: 1.125rem;
   font-weight: 600;
+  display: flex;
+  align-content: center;
+  justify-content: center;
   color: var(--text-primary);
   margin: 0;
+}
+
+.card-ico{
+  margin-top: 3px;
+  height: 16px;
+  width: 16px;
 }
 
 .card-value {

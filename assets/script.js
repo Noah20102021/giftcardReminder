@@ -153,7 +153,10 @@ function loadIndexScreen(cards){
         cardList.innerHTML += "<article class=\"card\">\n" +
             "                    <div class=\"card-content\">\n" +
             "                        <div class=\"card-header\">\n" +
-            "                            <h3 class=\"card-title\">"+siteName+" gift card</h3>\n" +
+            "<div class=\"card-title\">"+
+            " <img class='card-ico'  src='https://s2.googleusercontent.com/s2/favicons?domain_url="+siteURL+"'>"+
+            "                            <h3  class=\"card-title\">"+siteName+" gift card</h3>\n" +
+            "</div>"+
             "                            <span class=\"card-value\">"+value+currency+"</span>\n" +
             "                        </div>\n" +
             "                        <div class=\"card-details\">\n" +
