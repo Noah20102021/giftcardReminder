@@ -6,6 +6,8 @@
   --text-primary: #111827;
   --text-secondary: #6b7280;
   --border-color: #e5e7eb;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -473,4 +475,49 @@ input[type="date"] {
   .form-row > * {
     width: 100%;
   }
+}
+
+.settings-button{
+    text-decoration: none;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+.settings-button:hover{
+  text-decoration: none;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+/* Delete Button */
+.delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--danger);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 2px 0 rgb(79 70 229 / 0.2);
+}
+
+.delete-button:hover {
+  background-color: var(--danger-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgb(79 70 229 / 0.2), 0 2px 4px -2px rgb(79 70 229 / 0.2);
+}
+
+.delete-button:active {
+  transform: translateY(0);
+}
+
+.delete-button i {
+  font-size: 1rem;
 }

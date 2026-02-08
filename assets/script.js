@@ -109,6 +109,80 @@ if (window.location.href.endsWith('index.html')) {
         document.getElementById("addFormExpires").disabled = !document.getElementById("expiresOnOff").checked;
         document.getElementById("addFormExpires").style.display = document.getElementById("expiresOnOff").checked ? "block" : "none";
     })
+}else if (window.location.href.endsWith('settings.html')) {
+
+    document.getElementById("delete-button").addEventListener("click", () => {
+        emptyStart()
+    })
+    document.getElementById("export-button").addEventListener("click", () => {
+        exportData()
+    })
+    document.getElementById("import-button").addEventListener("click", () => {
+        document.getElementById("import-file").click();
+    })
+    document.getElementById('import-file').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        importData(file)
+    }
+    )
+
+}else if (window.location.href.endsWith('delete.html')){
+    document.getElementById("delete-final-button").addEventListener("click", () => {
+        emptyFinal()
+    })
+}
+
+async function importData(file) {
+    try {
+        // Convert the file blob to text
+        const text = await file.text();
+
+        // Parse the text into a JavaScript object
+        const fileData = JSON.parse(text);
+        let cards;
+        chrome.storage.local.get(["cards"], data => {
+            cards = data.cards || [];
+            for (const card of fileData) {
+                cards.push({
+                    id: Date.now() + Math.round(Math.random()*100),
+                    siteName: card.siteName,
+                    siteURL: card.siteURL,
+                    value: card.value,
+                    currency: card.currency,
+                    expires: card.expires
+                });
+            }
+            chrome.storage.local.set({cards: cards});
+        });
+
+        console.log("Success:", fileData);
+        window.location.href = "index.html";
+    } catch (error) {
+        console.error("Error parsing JSON:", error);
+    }
+}
+
+function exportData() {
+    chrome.storage.local.get(["cards"], data => {
+        const cards = data.cards || [];
+        const blob = new Blob([JSON.stringify(cards)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const time = new Date().getTime();
+        a.href = url;
+        a.download = "giftCardReminder-export_"+time+".json";
+        a.click();
+    });
+
+}
+
+function emptyFinal() {
+    chrome.storage.local.clear();
+    window.location.href = "index.html";
+}
+
+function emptyStart() {
+    window.location.href = "delete.html";
 }
 
 function addCurrencyToForm() {
@@ -127,7 +201,6 @@ function scanCards() {
         });
     });
 }
-
 
 function loadIndexScreen(cards){
     cards.sort((a, b) => {

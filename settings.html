@@ -9,16 +9,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=settings" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=home" />
 </head>
 <body>
     <div class="app-container">
         <header class="app-header">
             <h1>Gift Card Reminder</h1>
             <div class="logo">
-                <a href="settings.html" class="settings-button">
+                <a href="index.html" class="settings-button">
                     <span id="settings" class="material-symbols-outlined">
-                        settings
+                        home
                     </span>
                 </a>
             </div>
@@ -27,16 +27,21 @@
         <div class="divider"></div>
 
         <main class="main-content">
-            <button id="add" class="add-button">
-                <i class="fas fa-plus"></i>
-                <span>Add Gift Card</span>
-            </button>
-
-            <div class="card-list" id="card-list">
-
-
-
+            <div class="form-actions">
+                <a id="import-button" class="cancel-button">
+                    <i class="fas fa-download"></i>
+                    <span>Import data</span>
+                </a>
+                <button id="export-button" type="submit" class="add-button">
+                    <i class="fas fa-upload"></i>
+                    <span>Export data</span>
+                </button>
+                <input type="file" id="import-file" accept=".json" hidden/>
             </div>
+            <button id="delete-button" class="delete-button">
+                <i class="fas fa-trash"></i>
+                <span>Empty storage</span>
+            </button>
         </main>
     </div>
     <script src="assets/script.js"></script>
